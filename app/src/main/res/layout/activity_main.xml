@@ -4,13 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.MainActivity"
     android:background="@drawable/pic">
 
+    <SurfaceView
+        android:id="@+id/surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00FFFFFF"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_1"
-        android:layout_width="680px"
-        android:layout_height="680px"
+        android:id="@+id/layout_dash_board_speed"
+        android:layout_width="@dimen/dash_board_width"
+        android:layout_height="@dimen/dash_board_height"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +46,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="@dimen/pager_width"
+        android:layout_height="@dimen/pager_height"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -51,9 +68,9 @@
         android:text="切换"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_2"
-        android:layout_width="680px"
-        android:layout_height="680px"
+        android:id="@+id/layout_dash_board_rotating"
+        android:layout_width="@dimen/dash_board_width"
+        android:layout_height="@dimen/dash_board_height"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dp_250">680px</dimen>
+    <dimen name="dp_300">680px</dimen>
+    <dimen name="dash_board_width">680px</dimen>
+    <dimen name="dash_board_height">680px</dimen>
+    <dimen name="pager_width">600px</dimen>
+    <dimen name="pager_height">600px</dimen>
+</resources>
