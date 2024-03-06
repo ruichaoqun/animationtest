@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ruichaoqun.animationtest"
+    namespace = "com.ts.clusterapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ruichaoqun.animationtest"
+        applicationId = "com.ts.clusterappt"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

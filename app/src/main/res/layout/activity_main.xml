@@ -11,7 +11,8 @@
         android:id="@+id/surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00FFFFFF"/>
+        android:background="#00FFFFFF"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_dash_board_speed"
@@ -48,8 +49,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+    <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="@dimen/pager_width"
         android:layout_height="@dimen/pager_height"
         app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +65,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:text="切换"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.FirstFragment">
-    <TextView
-        android:id="@+id/tv_mils"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="324.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp"/>
-    <TextView
-        android:id="@+id/tv_unit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="km"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mils"
-        android:layout_marginTop="10dp"/>
-    <TextView
-        android:id="@+id/tv_total_mils"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="25768"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_unit"
-        android:layout_marginTop="10dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="426px"
+        android:layout_height="403px"
+        android:background="@drawable/bg_second_fragment"
+        android:layout_centerInParent="true">
+        <TextView
+            android:id="@+id/tv_mils"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="324.9"
+            android:textColor="@color/white"
+            android:textSize="56px"
+            android:layout_above="@+id/tv_unit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24px"/>
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="km"
+            android:textColor="#93a3b8"
+            android:textSize="26px"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/tv_total_mils"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25768"
+            android:textColor="@color/white"
+            android:textSize="56px"
+            android:layout_below="@+id/tv_unit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30px"/>
+    </RelativeLayout>
+</RelativeLayout>
