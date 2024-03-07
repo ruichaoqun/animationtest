@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">animationtest</string>
+    <string name="app_name">cluster</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_application_id">com.ruichaoqun.myapplication</string>
     <string name="navigation_className">com.ruichaoqun.myapplication.MainActivity</string>

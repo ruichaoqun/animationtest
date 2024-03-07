@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ts.clusterapp"
+    namespace = "com.mercedes.cluster"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ts.clusterappt"
+        applicationId = "com.mercedes.cluster"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -38,6 +38,16 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
+    signingConfigs {
+        create("release") {
+            storeFile = File("../8295sign.jks")
+            storePassword = "1234456"
+            keyAlias = "platform"
+            keyPassword = "1234456"
+        }
+    }
 }
 
 dependencies {
@@ -48,11 +58,12 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     val hiltVersion = "2.50"
-    implementation ("com.google.dagger:hilt-android:$hiltVersion")
-    kapt ("com.google.dagger:hilt-compiler:$hiltVersion")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 }

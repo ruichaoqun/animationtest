@@ -18,7 +18,8 @@
             android:textSize="56px"
             android:layout_above="@+id/tv_unit"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24px"/>
+            android:layout_marginBottom="24px"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"/>
 
         <TextView
             android:id="@+id/tv_unit"
@@ -27,7 +28,8 @@
             android:text="km"
             android:textColor="#93a3b8"
             android:textSize="26px"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"/>
         <TextView
             android:id="@+id/tv_total_mils"
             android:layout_width="wrap_content"
@@ -37,6 +39,7 @@
             android:textSize="56px"
             android:layout_below="@+id/tv_unit"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30px"/>
+            android:layout_marginTop="30px"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"/>
     </RelativeLayout>
 </RelativeLayout>

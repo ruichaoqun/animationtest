@@ -1,12 +1,14 @@
-package com.ts.clusterapp.ui
+package com.mercedes.cluster.ui
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.display.DisplayManager
 import android.hardware.display.DisplayManager.DisplayListener
 import android.hardware.display.VirtualDisplay
@@ -26,34 +28,29 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.ts.clusterapp.R
-import com.ts.clusterapp.databinding.ActivityMainBinding
+import com.mercedes.cluster.R
+import com.mercedes.cluster.databinding.ActivityMainBinding
+import com.mercedes.cluster.extention.animateToInvisible
+import com.mercedes.cluster.extention.animateToLeftBottom
+import com.mercedes.cluster.extention.animateToRightBottom
+import com.mercedes.cluster.extention.animateToVisible
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val TAG = "Cluster.MainActivity"
-
     private val displayName = "MapVirtualDisplay"
-    private var isOpen = false
+
     private lateinit var mBinding: ActivityMainBinding
-
-    private lateinit var leftOpenAnimatorSet: AnimatorSet
-    private lateinit var leftCloseAnimatorSet: AnimatorSet
-    private lateinit var rightOpenAnimatorSet: AnimatorSet
-    private lateinit var rightCloseAnimatorSet: AnimatorSet
-
     private var mFragments: MutableList<Fragment> = mutableListOf()
     private var mCurrentPosition = -1
-
-    private var translationX: Float = 0f
-    private var translationY: Float = 0f
-    private var rotationY: Float = 45f
 
     private var mVirtualDisplay: VirtualDisplay? = null
     private lateinit var mDisplayManager: DisplayManager
     private var mRegisteredNavDisplayId: Int = Display.INVALID_DISPLAY
+    private var isFullScreenTheme = false
+    private var isFunctionTheme = false
 
 
     private val mDisplayListener: DisplayListener = object : DisplayListener {
@@ -64,10 +61,10 @@ class MainActivity : AppCompatActivity() {
                 TAG, "onDisplayAdded, displayId: " + displayId
                         + ", navigation display id: " + navDisplayId
             )
-            if (navDisplayId == displayId) {
-                mRegisteredNavDisplayId = displayId
-                launchNavigationActivity()
-            }
+//            if (navDisplayId == displayId) {
+//                mRegisteredNavDisplayId = displayId
+//                launchNavigationActivity()
+//            }
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -94,22 +91,19 @@ class MainActivity : AppCompatActivity() {
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-        translationX = resources.getDimensionPixelSize(R.dimen.dp_300).toFloat()
-        translationY = resources.getDimensionPixelSize(R.dimen.dp_250).toFloat()
 
-        initAnimator()
         initFragments()
         initMap()
-        mBinding.button.setOnClickListener {
-            switchFragment()
-        }
+
+        var receiver = TestReceiver()
+        registerReceiver(receiver, IntentFilter("com.mercedes.cluster.ui"))
     }
 
     @SuppressLint("CommitTransaction")
     private fun initFragments() {
         mFragments.add(FirstFragment())
         mFragments.add(SecondFragment())
-        mFragments.add(ThirdFragment())
+        mBinding.indicatorView.setCount(mFragments.size)
         val transaction = supportFragmentManager.beginTransaction()
         for (fragment in mFragments) {
             transaction.add(R.id.frame_layout, fragment)
@@ -126,7 +120,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun switchFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(R.anim.slide_in,R.anim.fade_out)
+        transaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)
         hideAllFragment(transaction)
         if (mCurrentPosition >= mFragments.size - 1) {
             mCurrentPosition = 0
@@ -135,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         }
         transaction.show(mFragments[mCurrentPosition]).commit()
         Log.i(TAG,"switchFragment  mCurrentPosition:$mCurrentPosition")
+        mBinding.indicatorView.setCurrentPosition(mCurrentPosition)
     }
 
     private fun initMap() {
@@ -145,28 +140,17 @@ class MainActivity : AppCompatActivity() {
                 Log.i(TAG, "surfaceCreated,holder: $holder")
             }
 
-            override fun surfaceChanged(
-                holder: SurfaceHolder,
-                format: Int,
-                width: Int,
-                height: Int,
-            ) {
-                Log.i(
-                    TAG,
-                    "surfaceChanged, holder: $holder , size: $width x $height , format:$format"
-                )
-//                if (mVirtualDisplay == null) {
-//                    mVirtualDisplay = createVirtualDisplay(holder.surface, width, height)
-//                } else {
-//                    mVirtualDisplay?.surface = holder.surface
-//                }
+            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int, ) {
+                Log.i(TAG, "surfaceChanged, holder: $holder , size: $width x $height , format:$format")
+                if (mVirtualDisplay == null) {
+                    mVirtualDisplay = createVirtualDisplay(holder.surface, width, height)
+                } else {
+                    mVirtualDisplay?.surface = holder.surface
+                }
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
-                Log.i(
-                    TAG,
-                    "surfaceDestroyed, holder: $holder , detaching surface from display, surface: ${holder.surface}"
-                )
+                Log.i(TAG, "surfaceDestroyed, holder: $holder , detaching surface from display, surface: ${holder.surface}")
                 mVirtualDisplay?.surface = null
             }
         })
@@ -208,127 +192,100 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initAnimator() {
-        leftOpenAnimatorSet = AnimatorSet().apply {
-            playTogether(
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardSpeed,
-                    View.ROTATION_Y,
-                    0f,
-                    rotationY
-                ).setDuration(1000),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardSpeed,
-                    View.TRANSLATION_X,
-                    0f,
-                    -translationX
-                )
-                    .setDuration(2000),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardSpeed,
-                    View.TRANSLATION_Y,
-                    0f,
-                    translationY
-                ).setDuration(2000),
-                ObjectAnimator.ofFloat(mBinding.layoutDashBoardSpeed, View.ALPHA, 1.0f, 0f)
-                    .setDuration(1200)
-            )
-        }
-
-        leftCloseAnimatorSet = AnimatorSet().apply {
-            playTogether(
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardSpeed,
-                    View.ROTATION_Y,
-                    rotationY,
-                    0f
-                ).setDuration(500),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardSpeed,
-                    View.TRANSLATION_X,
-                    -translationX,
-                    0f
-                )
-                    .setDuration(500),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardSpeed,
-                    View.TRANSLATION_Y,
-                    translationY,
-                    0f
-                ).setDuration(500),
-                ObjectAnimator.ofFloat(mBinding.layoutDashBoardSpeed, View.ALPHA, 0f, 1f)
-            )
-            duration = 1000
-        }
-
-        rightOpenAnimatorSet = AnimatorSet().apply {
-            playTogether(
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardRotating,
-                    View.ROTATION_Y,
-                    0f,
-                    -rotationY
-                ).setDuration(500),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardRotating,
-                    View.TRANSLATION_X,
-                    0f,
-                    translationX
-                )
-                    .setDuration(500),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardRotating,
-                    View.TRANSLATION_Y,
-                    0f,
-                    translationY
-                )
-                    .setDuration(500),
-                ObjectAnimator.ofFloat(mBinding.layoutDashBoardRotating, View.ALPHA, 1.0f, 0f)
-                    .apply {
-                        interpolator = AccelerateInterpolator()
-                    }
-            )
-            duration = 1000
-        }
-
-        rightCloseAnimatorSet = AnimatorSet().apply {
-            playTogether(
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardRotating,
-                    View.ROTATION_Y,
-                    -rotationY,
-                    0f
-                ).setDuration(500),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardRotating,
-                    View.TRANSLATION_X,
-                    translationX,
-                    0f
-                )
-                    .setDuration(500),
-                ObjectAnimator.ofFloat(
-                    mBinding.layoutDashBoardRotating,
-                    View.TRANSLATION_Y,
-                    translationY,
-                    0f
-                )
-                    .setDuration(500),
-                ObjectAnimator.ofFloat(mBinding.layoutDashBoardRotating, View.ALPHA, 0f, 1f)
-            )
-
-            duration = 1000
+    private fun switchToNormal() {
+        if (isFullScreenTheme) {
+            isFullScreenTheme = false
+            showDashBoard()
+            mBinding.ivBg.animateToInvisible()
+            mBinding.ivBgMask.setImageResource(R.drawable.bg_mask_2)
+            mBinding.ivBgMask.animateToVisible()
+            isFunctionTheme = false
+        } else {
+            if (isFunctionTheme) {
+                switchFragment()
+                mBinding.ivBg.animateToInvisible()
+                mBinding.ivBgMask.setImageResource(R.drawable.bg_mask_2)
+                mBinding.ivBgMask.animateToVisible()
+                isFunctionTheme = false
+            } else {
+                switchToFunctionPage()
+            }
         }
     }
 
-    private fun open() {
-        leftOpenAnimatorSet.start()
-        rightOpenAnimatorSet.start()
-        isOpen = true
+    private fun switchToFullMap() {
+        if (isFullScreenTheme) {
+            if (isFunctionTheme) {
+                switchToFunctionPage()
+            } else {
+                switchToNormal()
+            }
+        } else {
+            if (isFunctionTheme) {
+                switchFragment()
+                isFunctionTheme = false
+            }
+            isFullScreenTheme = true
+            hideDashBoard()
+            mBinding.ivBg.animateToInvisible()
+            mBinding.ivBgMask.setImageResource(R.drawable.bg_mask)
+            mBinding.ivBgMask.animateToVisible()
+        }
     }
 
-    private fun close() {
-        leftCloseAnimatorSet.start()
-        rightCloseAnimatorSet.start()
-        isOpen = false
+    private fun switchToFunctionPage() {
+        if (isFullScreenTheme) {
+            showDashBoard()
+            switchFragment()
+            mBinding.ivBgMask.animateToInvisible()
+            mBinding.ivBg.animateToVisible()
+            isFullScreenTheme = false
+            isFunctionTheme = true
+        } else {
+            if (isFunctionTheme) {
+                switchToNormal()
+            } else {
+                isFunctionTheme = true
+                switchFragment()
+                mBinding.ivBgMask.animateToInvisible()
+                mBinding.ivBg.animateToVisible()
+            }
+        }
+    }
+
+    private fun showDashBoard() {
+        mBinding.layoutDashBoardSpeed.animateToLeftBottom(true)
+        mBinding.layoutDashBoardRotating.animateToRightBottom(true)
+    }
+
+    private fun hideDashBoard() {
+        mBinding.layoutDashBoardSpeed.animateToLeftBottom(false)
+        mBinding.layoutDashBoardRotating.animateToRightBottom(false)
+    }
+
+    inner class TestReceiver : BroadcastReceiver() {
+        var lastTime = System.currentTimeMillis()
+        override fun onReceive(context: Context?, intent: Intent?) {
+            var code = intent?.getIntExtra("mode",0)
+            if (System.currentTimeMillis() - lastTime < 5000) {
+                return
+            }
+            lastTime = System.currentTimeMillis()
+            when (code) {
+                0 -> {
+                    switchToNormal()
+                }
+                1 -> {
+                    switchToFunctionPage()
+                }
+                2 -> {
+                    switchToFullMap()
+                }
+                else -> {
+                    switchToNormal()
+                }
+            }
+        }
+
     }
 }

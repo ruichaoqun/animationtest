@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.FirstFragment">
+    tools:context=".ui.FiveFragment">
+
     <TextView
         android:id="@+id/text_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ab Start - 9:50 Uhr"
+        android:text="Ab Reset - 28.03.23"
         android:textColor="@color/white"
         android:textSize="45px"
         android:layout_centerHorizontal="true"
@@ -31,7 +31,7 @@
                 android:id="@+id/text_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24.3"
+                android:text="24.9"
                 android:textSize="50px"
                 android:textColor="@color/white" />
             <TextView
@@ -47,7 +47,7 @@
                 android:id="@+id/text_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="68"
+                android:text="56"
                 android:textSize="50px"
                 android:textColor="@color/white"
                 android:layout_marginStart="50px"/>
@@ -61,60 +61,45 @@
                 android:layout_marginStart="5px"/>
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_marginTop="60px">
-        <TextView
-            android:id="@+id/text_6"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="375"
-            android:textSize="50px"
-            android:textColor="@color/white" />
-        <TextView
-            android:id="@+id/text_7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="km"
-            android:textSize="30px"
-            android:textColor="#93a3b8"
-            android:layout_marginStart="5px"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="60px">
+            <TextView
+                android:id="@+id/text_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18627"
+                android:textSize="50px"
+                android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/text_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="km"
+                android:textSize="30px"
+                android:textColor="#93a3b8"
+                android:layout_marginStart="5px"/>
 
-        <TextView
-            android:id="@+id/text_8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4:12"
-            android:textSize="50px"
-            android:textColor="@color/white"
-            android:layout_marginStart="50px"/>
-        <TextView
-            android:id="@+id/text_9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="h"
-            android:textSize="30px"
-            android:textColor="#93a3b8"
-            android:layout_marginStart="5px"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/text_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="94:34"
+                android:textSize="50px"
+                android:textColor="@color/white"
+                android:layout_marginStart="50px"/>
+            <TextView
+                android:id="@+id/text_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="h"
+                android:textSize="30px"
+                android:textColor="#93a3b8"
+                android:layout_marginStart="5px"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="600px"
-        android:layout_height="100px"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#336200EE"
-        android:layout_marginBottom="50px">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="50px"
-            android:text="Letzte Pause vor 2.0h"
-            android:layout_gravity="center_horizontal"/>
-    </FrameLayout>
 </RelativeLayout>

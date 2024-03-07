@@ -1,4 +1,4 @@
-package com.ts.clusterapp
+package com.mercedes.cluster
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

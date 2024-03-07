@@ -1,4 +1,4 @@
-package com.ts.clusterapp.ui
+package com.mercedes.cluster.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

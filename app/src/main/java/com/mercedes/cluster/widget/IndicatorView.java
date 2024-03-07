@@ -1,10 +1,13 @@
-package com.ts.clusterapp.widget;
+package com.mercedes.cluster.widget;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -12,14 +15,14 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.ts.clusterapp.R;
+import com.mercedes.cluster.R;
+
 
 public class IndicatorView extends View {
-    private static int mNormalRadius = 3;
-    private static int mSelectRadius = 5;
-    private static int mWidth = 15;
+    private static int mNormalRadius = 5;
+    private static int mSelectRadius = 8;
 
-    private static int mDivider = 10;
+    private static int mDivider = 24;
 
     private Paint mNormalPaint;
     private Paint mSelectPaint;
@@ -29,7 +32,9 @@ public class IndicatorView extends View {
 
     private int mSelectPosition = 0;
 
-    private int mSelectY = 5;
+    private int mSelectY = mSelectRadius;
+
+    private Handler mHandler;
 
 
     public IndicatorView(Context context) {
@@ -44,12 +49,19 @@ public class IndicatorView extends View {
 
     private void init() {
         mNormalPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mNormalPaint.setStyle(Paint.Style.FILL);
         mNormalPaint.setColor(getContext().getColor(R.color.white));
-        mNormalPaint.setStrokeWidth(mNormalRadius);
 
         mSelectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mSelectPaint.setStyle(Paint.Style.FILL);
         mSelectPaint.setColor(getContext().getColor(R.color.blue));
-        mSelectPaint.setStrokeWidth(mSelectRadius);
+        mHandler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                setVisibility(View.INVISIBLE);
+            }
+        };
     }
 
     public void setCount(int mCount) {
@@ -60,11 +72,14 @@ public class IndicatorView extends View {
     public void setCurrentPosition(int position) {
         scrollToPosition(mSelectPosition, position);
         mSelectPosition = position;
+        setVisibility(View.VISIBLE);
+        mHandler.removeMessages(1);
+        mHandler.sendEmptyMessageDelayed(1,5000);
     }
 
     private void scrollToPosition(int oldPosition, int newPosition) {
-        int oldX = 5 + oldPosition * mDivider;
-        int newX = 5 + newPosition * mDivider;
+        int oldX = mSelectRadius + oldPosition * mDivider;
+        int newX = mSelectRadius + newPosition * mDivider;
         ValueAnimator animator = ObjectAnimator.ofInt(oldX,newX);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(animation -> {
@@ -76,16 +91,16 @@ public class IndicatorView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int height = mDivider * (mCount - 1) + 10;
-        setMeasuredDimension(10, height);
+        int height = mDivider * (mCount - 1) + mSelectRadius * 2;
+        setMeasuredDimension(mSelectRadius * 2, height);
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
         for (int i = 0; i < mCount; i++) {
-            canvas.drawPoint(5,5+ mDivider * mCount,mNormalPaint);
+            canvas.drawCircle(mSelectRadius,mSelectRadius + mDivider * i,mNormalRadius,mNormalPaint);
         }
-        canvas.drawPoint(5,mSelectY,mSelectPaint);
+        canvas.drawCircle(mSelectRadius,mSelectY,mSelectRadius,mSelectPaint);
     }
 }

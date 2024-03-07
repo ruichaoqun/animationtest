@@ -1,15 +1,11 @@
-package com.ts.clusterapp.ui
+package com.mercedes.cluster.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.transition.ChangeTransform
-import androidx.transition.Fade
-import androidx.transition.TransitionInflater
-import com.ts.clusterapp.R
+import com.mercedes.cluster.R
 
 class ThirdFragment:Fragment() {
 
@@ -23,10 +19,5 @@ class ThirdFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_third, container, false)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("AAAAAA","onResume")
     }
 }

@@ -4,97 +4,207 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
-    android:background="@drawable/pic">
+    tools:context=".ui.MainActivity">
 
     <SurfaceView
         android:id="@+id/surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00FFFFFF"
         android:visibility="gone"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="地图"
+        android:textColor="@color/white"
+        android:textSize="200px"
+        android:gravity="center"
+        android:background="#0FF"/>
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_1"
+        android:visibility="invisible"/>
+    <ImageView
+        android:id="@+id/iv_bg_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_mask_2"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_dash_board_speed"
-        android:layout_width="@dimen/dash_board_width"
-        android:layout_height="@dimen/dash_board_height"
+        android:layout_width="674px"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="20dp">
+        android:layout_marginStart="12px"
+        android:layout_marginTop="18px">
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/image"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shadow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/left"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_point_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="km/h"
-            android:textColor="#FF666666"
-            android:textSize="16sp"
+            android:textColor="#8391A3"
+            android:textSize="26px"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="80dp"/>
+            android:layout_marginTop="80dp"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50"
-            android:textColor="#FFFFFFFF"
-            android:textSize="64sp"
+            android:text="64"
+            android:textColor="#EBFBFF"
+            android:textSize="164px"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bargraph2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="546px"/>
+        <ImageView
+            android:id="@+id/iv_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_battery"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_battery"
+            android:layout_marginTop="558px"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginEnd="10px"/>
+        <TextView
+            android:id="@+id/tv_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="69"
+            android:textSize="36px"
+            android:textColor="@color/white"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_battery"
+            app:layout_constraintEnd_toStartOf="@+id/tv_battery_unit"
+            android:layout_marginTop="554px"/>
+        <TextView
+            android:id="@+id/tv_battery_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:textSize="26px"
+            android:textColor="#93A3B8"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_battery"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="563px"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="@dimen/pager_width"
-        android:layout_height="@dimen/pager_height"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
-        android:id="@+id/button"
+    <com.mercedes.cluster.widget.IndicatorView
+        android:id="@+id/indicator_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="切换"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_dash_board_rotating"
+        android:layout_marginEnd="10px"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_dash_board_rotating"
-        android:layout_width="@dimen/dash_board_width"
-        android:layout_height="@dimen/dash_board_height"
+        android:layout_width="674px"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="20dp">
+        android:layout_marginEnd="14px"
+        android:layout_marginTop="16px">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shadow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/image"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/right"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_point_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="% Power"
+            android:textColor="#FF8391A3"
+            android:textSize="26px"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
+            android:layout_marginTop="120px"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="km Reichweite"
-            android:textColor="#FF666666"
-            android:textSize="16sp"
+            android:textColor="#EBFBFF"
+            android:textSize="26px"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="80dp"/>
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
+            android:layout_marginTop="200px"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="435"
-            android:textColor="#FFFFFFFF"
-            android:textSize="64sp"
+            android:textColor="#EBFBFF"
+            android:textSize="162px"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,12 +213,42 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="max 465km"
-            android:textColor="#FF666666"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="max 468km"
+            android:textColor="#FF8391A3"
+            android:textSize="26px"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="80dp"/>
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
+            android:layout_marginTop="404px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHARGE"
+            android:textColor="#00ADEF"
+            android:textSize="26px"
+            android:fontFamily="@font/mbdynamic_reg_it_global_v4_0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="572px"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bargraph"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="550px"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="1206px"
+        android:layout_marginBottom="10px"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
